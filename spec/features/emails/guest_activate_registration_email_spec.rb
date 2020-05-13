@@ -28,7 +28,7 @@ RSpec.describe "To register an account", type: :feature do
     expect(page).to have_content("Status: Inactive")
   end
 
-  it "As a non-activated user I click link in my email to activate" do
+  xit "As a non-activated user I click link in my email to activate" do
     visit '/'
 
     expect(page).to have_content("Status: Inactive")
