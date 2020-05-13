@@ -12,6 +12,7 @@
   </section>
 
   <% if current_user.token != '0' %>
+    <%= link_to "Send an invite", "/invite"%>
     <h1><%= current_user.username %>'s Github</h1>
     <section id='github-repos'>
       <h3> Repos </h3>
@@ -51,5 +52,6 @@
     <% current_user.friends.each do |friend| %>
       <p><%= friend%> </p>
     <% end %>
+
   </section>
 </section>

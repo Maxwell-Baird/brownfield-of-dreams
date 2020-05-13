@@ -23,4 +23,9 @@ class GithubService
       faraday.headers['Authorization'] = "token #{@user.token}"
     end
   end
+
+  def git_user(user)
+    search = conn.get("/users/#{user}")
+    JSON.parse(search.body, symbolize_names: true)
+  end
 end
