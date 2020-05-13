@@ -10,11 +10,9 @@ RSpec.describe "As a guest User", type: :feature do
 
     visit '/'
 
-    click 'Register'
+    click_on 'Register'
 
     expect(current_path).to eq('/register')
-
-    expect(current_path).to eq(new_user_path)
 
     fill_in 'user[email]', with: email
     fill_in 'user[first_name]', with: first_name
