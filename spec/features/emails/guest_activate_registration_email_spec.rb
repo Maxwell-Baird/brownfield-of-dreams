@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "To register an account", type: :feature do
-  it "As a guest user I fill in form to register with inactive status" do
+  skip it "As a guest user I fill in form to register with inactive status" do
     email = 'jimbob@aol.com'
     first_name = 'Jim'
     last_name = 'Bob'
@@ -28,7 +28,7 @@ RSpec.describe "To register an account", type: :feature do
     expect(page).to have_content("Status: Inactive")
   end
 
-  xit "As a non-activated user I click link in my email to activate" do
+  skip it "As a non-activated user I click link in my email to activate" do
     visit '/'
 
     expect(page).to have_content("Status: Inactive")
