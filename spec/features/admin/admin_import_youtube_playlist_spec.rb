@@ -6,7 +6,7 @@ RSpec.describe "When I visit '/admin/tutorials/new' as Admin", type: :feature do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
     visit new_admin_tutorial_path
-    
+
     click_link 'Import YouTube Playlist'
 
     expect(current_path).to eq('/admin/import_tutorial/new')
@@ -17,18 +17,18 @@ RSpec.describe "When I visit '/admin/tutorials/new' as Admin", type: :feature do
     fill_in "Playlist", with: 'PLA1C00061BB65843A'
 
     click_button "Create"
-    
+
     expect(current_path).to eq('/admin/dashboard')
-  
+
     expect(page).to have_content('Successfully created tutorial. View it here.')
     click_link 'View it here'
 
     tutorial = Tutorial.last
-    
+
     expect(current_path).to eq(tutorial_path(tutorial))
-    
+
     order = tutorial.videos.map { |vid| vid.video_id }
-    
+
     expect(order).to eq(["GAoK9zM8FFQ", "wmHc2utId6c", "55cFpRycdKI", "CFNc1iY8wi0", "nY8SmllLcIU", "s-tibm_dPFQ"])
     expect(tutorial.videos.count).to eq(6)
     expect(tutorial.videos.first.position).to eq(0)
@@ -38,7 +38,7 @@ RSpec.describe "When I visit '/admin/tutorials/new' as Admin", type: :feature do
   it "I can create a tutorial with a playlist of greater than 50 videos", :vcr do
     admin = create(:admin)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-    
+
     visit '/admin/import_tutorial/new'
 
     fill_in "Title", with: "SNL"
@@ -54,11 +54,11 @@ RSpec.describe "When I visit '/admin/tutorials/new' as Admin", type: :feature do
 
     expect(tutorial.videos.count).to eq(88)
   end
-  
+
   it "I can create a tutorial with a playlist of greater than 100 videos", :vcr do
     admin = create(:admin)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-    
+
     visit '/admin/import_tutorial/new'
 
     fill_in "Title", with: "Funny Cat Videos"
@@ -73,5 +73,21 @@ RSpec.describe "When I visit '/admin/tutorials/new' as Admin", type: :feature do
     tutorial = Tutorial.last
 
     expect(tutorial.videos.count).to eq(123)
+  end
+
+  it "I can not create a tutorial", :vcr do
+    admin = create(:admin)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit '/admin/import_tutorial/new'
+
+    fill_in "Description", with: "A playlist of 123 videos"
+    fill_in "Thumbnail", with: "https://i.ebayimg.com/images/g/fikAAOSwJOJcSWXe/s-l640.jpg"
+    fill_in "Playlist", with: 'PLD72Ylz-Y01vcGTYmEaN9nz02o0yZMWy8'
+
+    click_button "Create"
+    expect(page).to have_content("Title can't be blank")
+
+
   end
 end
