@@ -50,4 +50,8 @@ class User < ApplicationRecord
     user = User.find_by(username: github_username)
     "#{user.first_name}-#{user.last_name}"
   end
+
+  def bookmarked_vids
+    videos.order(:tutorial_id, :position)
+  end
 end
