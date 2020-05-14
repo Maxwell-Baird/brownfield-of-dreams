@@ -26,7 +26,6 @@ RSpec.describe "To register an account", type: :feature do
     expect(page).to have_content("Logged in as Jim Bob")
     expect(page).to have_content("This account has not yet been activated. Please check your email.")
     expect(page).to have_content("Status: Inactive")
-    save_and_open_page
   end
 
   xit "As a non-activated user I click link in my email to activate" do
