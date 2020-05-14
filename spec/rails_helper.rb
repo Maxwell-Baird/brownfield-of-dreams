@@ -47,4 +47,5 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GITHUB_TOKEN>') { ENV['GITHUB_TOKEN'] }
   config.filter_sensitive_data('<GITHUB_TOKEN_2>') { ENV['GITHUB_TOKEN_2'] }
   config.configure_rspec_metadata!
+  config.allow_http_connections_when_no_cassette = true
 end
