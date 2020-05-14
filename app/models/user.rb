@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true, presence: true
   validates :first_name, presence: true
+  validates :status, presence: true
   validates :token, presence: true
   enum role: { default: 0, admin: 1 }
   has_secure_password
@@ -53,5 +54,17 @@ class User < ApplicationRecord
 
   def bookmarked_vids
     videos.order(:tutorial_id, :position)
+  end
+
+  def git_email(github_username)
+    service = GithubService.new(self)
+    json = service.git_user(github_username)
+    json[:email]
+  end
+
+  def git_user_exist(github_username)
+    service = GithubService.new(self)
+    json = service.git_user(github_username)
+    !json[:login].nil?
   end
 end

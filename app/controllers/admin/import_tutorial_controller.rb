@@ -5,7 +5,6 @@ class Admin::ImportTutorialController < Admin::BaseController
 
   def create
     @tutorial = Tutorial.create(tutorial_params)
-
     if @tutorial.save
       youtube = YoutubeService.new
       video_list = youtube.playlist(params[:tutorial][:playlist_id])
