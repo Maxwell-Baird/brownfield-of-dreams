@@ -51,4 +51,16 @@ class User < ApplicationRecord
     user = User.find_by(username: github_username)
     "#{user.first_name}-#{user.last_name}"
   end
+
+  def git_email(github_username)
+    service = GithubService.new(self)
+    json = service.git_user(github_username)
+    json[:email]
+  end
+
+  def git_user_exist(github_username)
+    service = GithubService.new(self)
+    json = service.git_user(github_username)
+    !json[:login].nil?
+  end
 end
