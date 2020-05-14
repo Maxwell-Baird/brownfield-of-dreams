@@ -7,11 +7,8 @@ class Admin::ImportTutorialController < Admin::BaseController
     @tutorial = Tutorial.create(tutorial_params)
 
     if @tutorial.save
-      youtube = YoutubeService.new
-      video_list = youtube.playlist(params[:tutorial][:playlist_id])
-      video_list.each do |video|
-        @tutorial.videos.create(new_video_params(video))
-      end
+      @tutorial.fill_playlist(params[:tutorial][:playlist_id])
+
       flash[:success] = 'Successfully created tutorial. '\
       "#{view_context.link_to('View it here', tutorial_path(@tutorial))}."
     else
@@ -27,13 +24,5 @@ class Admin::ImportTutorialController < Admin::BaseController
                                      :title,
                                      :description,
                                      :thumbnail)
-  end
-
-  def new_video_params(vid)
-    { title: vid[:snippet][:title],
-      description: vid[:snippet][:description],
-      video_id: vid[:snippet][:resourceId][:videoId],
-      thumbnail: vid[:snippet][:thumbnails][:high][:url],
-      position: vid[:snippet][:position] }
   end
 end
