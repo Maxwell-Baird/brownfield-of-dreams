@@ -48,6 +48,12 @@ describe "An Admin can edit a tutorial" do
       source.drag_to(target)
     end
     click_on('Save Video Order')
+    visit '/'
 
+    click_on prework_tutorial.title
+
+    expect(current_path).to eq(tutorial_path(prework_tutorial))
+    expect(page).to have_content(video2.title)  
+    expect(page).to have_content(prework_tutorial.title)
   end
 end
