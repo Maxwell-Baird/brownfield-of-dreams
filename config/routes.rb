@@ -51,7 +51,12 @@ Rails.application.routes.draw do
   end
 
   resources :user_videos, only:[:create, :destroy]
+
   post 'invite', to: 'invite#create'
   get 'invite', to: 'invite#show'
+
+  # email activation
+  get '/users/:user_id/activate', to: 'activation#update'
+  get '/activated', to: 'activation#show'
 
 end
